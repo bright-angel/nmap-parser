@@ -1,13 +1,9 @@
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "nmap-parser"
+name = "nmap-xml2xlsx"
 version = "1.0.0"
 description = "Convert Nmap XML scan results to Excel format with GUI and CLI support"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"                     # ✅ 改为 SPDX 字符串
 requires-python = ">=3.8"
 authors = [
     {name = "test233"}
@@ -20,14 +16,9 @@ classifiers = [
     "Environment :: X11 Applications :: GTK",
     "Environment :: MacOS X",
     "Intended Audience :: Information Technology",
-    "License :: OSI Approved :: MIT License",
+    # "License :: OSI Approved :: MIT License",  ✅ 已移除
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
     "Topic :: Security",
     "Topic :: System :: Networking",
     "Topic :: Utilities",
@@ -55,3 +46,8 @@ Issues = "https://github.com/bright-angel/nmap-parser/issues"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["nmap_parser*"]
+
+[dependency-groups]
+dev = [
+    "build>=1.2.2.post1",
+]
