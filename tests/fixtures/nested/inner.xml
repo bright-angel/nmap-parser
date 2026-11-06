@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nmaprun scanner="nmap" args="nmap -oX inner.xml 10.1.1.1" start="1730000200" version="7.95" xmloutputversion="1.05">
+  <host starttime="1730000201" endtime="1730000202">
+    <status state="up" reason="echo-reply" reason_ttl="64"/>
+    <address addr="10.1.1.1" addrtype="ipv4"/>
+    <hostnames><hostname name="inner.example.test" type="PTR"/></hostnames>
+    <ports><port protocol="tcp" portid="8080"><state state="open" reason="syn-ack"/><service name="http-proxy"/></port></ports>
+  </host>
+  <runstats><finished time="1730000203" elapsed="2.0" exit="success"/><hosts up="1" down="0" total="1"/></runstats>
+</nmaprun>

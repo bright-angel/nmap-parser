@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun [<!ENTITY harmless "10.0.0.1">]>
+<nmaprun scanner="nmap" version="7.95">
+  <host><status state="up"/><address addr="&harmless;" addrtype="ipv4"/></host>
+</nmaprun>

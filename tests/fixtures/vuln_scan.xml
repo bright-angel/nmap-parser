@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nmaprun scanner="nmap" args="nmap -sV --script vuln -oX vuln.xml 10.0.0.5" start="1730000100" startstr="Mon Oct 27 12:01:40 2025" version="7.95" xmloutputversion="1.05">
+  <host starttime="1730000101" endtime="1730000110">
+    <status state="up" reason="syn-ack" reason_ttl="53"/>
+    <address addr="10.0.0.5" addrtype="ipv4"/>
+    <hostnames>
+      <hostname name="target.example.test" type="PTR"/>
+    </hostnames>
+    <ports>
+      <port protocol="tcp" portid="443">
+        <state state="open" reason="syn-ack" reason_ttl="53"/>
+        <!-- Deliberately hostile values: scan data must stay literal text in Excel. -->
+        <service name="https" product="=2+2" version="+1" extrainfo="-2" method="probed" conf="10">
+          <cpe>cpe:/a:openssl:openssl</cpe>
+        </service>
+        <script id="ssl-heartbleed" output="=HYPERLINK(&quot;http://evil.example&quot;,&quot;click&quot;)" version="1.2">
+          <elem key="state">VULNERABLE</elem>
+          <elem key="severity">HIGH</elem>
+          <elem key="description">The heartbleed extension is enabled.</elem>
+          <elem key="risk_factor">High</elem>
+          <elem key="cve">CVE-2014-0160</elem>
+          <elem key="cve">CVE-2014-0346</elem>
+          <elem key="see_also">https://example.test/heartbleed</elem>
+          <elem key="solution">Upgrade OpenSSL.</elem>
+          <elem key="msf_module">auxiliary/scanner/ssl/openssl_heartbleed</elem>
+          <elem key="cert">@SUM(1+1)</elem>
+          <table key="children">
+            <elem key="ids">CVE-2014-9999</elem>
+            <elem key="bid">66666</elem>
+          </table>
+        </script>
+      </port>
+    </ports>
+    <hostscript>
+      <script id="host-script" output="host level info">
+        <elem key="title">Host-level script result</elem>
+        <elem key="severity">LOW</elem>
+      </script>
+    </hostscript>
+  </host>
+  <runstats>
+    <finished time="1730000120" timestr="Mon Oct 27 12:02:00 2025" elapsed="10.0" exit="success"/>
+    <hosts up="1" down="0" total="1"/>
+  </runstats>
+</nmaprun>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Mon Oct 27 12:00:00 2025 -->
+<nmaprun scanner="nmap" args="nmap -sV -oX basic.xml 192.168.1.0/30" start="1730000000" startstr="Mon Oct 27 12:00:00 2025" version="7.95" xmloutputversion="1.05">
+  <host starttime="1730000001" endtime="1730000010">
+    <status state="up" reason="syn-ack" reason_ttl="64"/>
+    <address addr="AA:BB:CC:DD:EE:FF" addrtype="mac"/>
+    <address addr="192.168.1.10" addrtype="ipv4"/>
+    <hostnames>
+      <hostname name="web.example.test" type="PTR"/>
+      <hostname name="web" type="user"/>
+    </hostnames>
+    <ports>
+      <extraports state="closed" count="1"/>
+      <port protocol="tcp" portid="22">
+        <state state="open" reason="syn-ack" reason_ttl="64"/>
+        <service name="ssh" product="OpenSSH" version="9.2p1" extrainfo="protocol 2.0" method="probed" conf="10">
+          <cpe>cpe:/a:openbsd:openssh:9.2p1</cpe>
+          <cpe>cpe:/o:linux:linux_kernel</cpe>
+        </service>
+      </port>
+      <port protocol="tcp" portid="80">
+        <state state="closed" reason="reset" reason_ttl="64"/>
+        <service name="http" conf="3" method="table"/>
+      </port>
+    </ports>
+  </host>
+  <host starttime="1730000002" endtime="1730000003">
+    <status state="down" reason="no-response" reason_ttl="0"/>
+    <address addr="192.168.1.11" addrtype="ipv4"/>
+    <hostnames/>
+  </host>
+  <hosthint>
+    <status state="up" reason="unknown"/>
+    <address addr="192.168.1.12" addrtype="ipv4"/>
+  </hosthint>
+  <runstats>
+    <finished time="1730000020" timestr="Mon Oct 27 12:00:20 2025" elapsed="20.5" exit="success" summary="Nmap done"/>
+    <hosts up="2" down="1" total="3"/>
+  </runstats>
+</nmaprun>

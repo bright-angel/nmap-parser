@@ -1,14 +1,17 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "nmap-xml2xlsx"
-version = "1.0.0"
-description = "Convert Nmap XML scan results to Excel format with GUI and CLI support"
+dynamic = ["version"]
+description = "Convert Nmap XML scan results into polished Excel reports (CLI + GUI)"
 readme = "README.md"
-license = "MIT"                     # ✅ 改为 SPDX 字符串
-requires-python = ">=3.8"
-authors = [
-    {name = "test233"}
-]
-keywords = ["nmap", "xml", "excel", "xlsx", "security", "scan", "parser"]
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+authors = [{ name = "test233" }]
+keywords = ["nmap", "xml", "excel", "xlsx", "security", "scan", "parser", "report"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -16,25 +19,41 @@ classifiers = [
     "Environment :: X11 Applications :: GTK",
     "Environment :: MacOS X",
     "Intended Audience :: Information Technology",
-    # "License :: OSI Approved :: MIT License",  ✅ 已移除
+    "Intended Audience :: System Administrators",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Security",
     "Topic :: System :: Networking",
     "Topic :: Utilities",
+    "Typing :: Typed",
 ]
-dependencies = [
-    "xlsxwriter>=3.0.0",
-    "customtkinter>=5.2.0",
-]
+# Only the spreadsheet writer is mandatory. The GUI is opt-in so headless
+# servers and CI pipelines do not pull in a Tk-based dependency tree.
+dependencies = ["xlsxwriter>=3.0.0"]
 
 [project.optional-dependencies]
 gui = ["customtkinter>=5.2.0"]
+test = ["pytest>=7.4", "openpyxl>=3.1"]
+dev = [
+    "nmap-xml2xlsx[gui,test]",
+    "build>=1.2",
+    "mypy>=1.8",
+    "ruff>=0.6",
+]
 
 [project.scripts]
 nmap-parser = "nmap_parser.cli:main"
-nmap-parser-gui = "nmap_parser.gui:main"
 
+# gui-scripts is used on Windows so the launcher does not open a console
+# window. Declared once here (the original project declared the same name in
+# both [project.scripts] and [project.gui-scripts], which produces colliding
+# launchers on Windows).
 [project.gui-scripts]
 nmap-parser-gui = "nmap_parser.gui:main"
 
@@ -42,12 +61,41 @@ nmap-parser-gui = "nmap_parser.gui:main"
 Homepage = "https://github.com/bright-angel/nmap-parser"
 Repository = "https://github.com/bright-angel/nmap-parser.git"
 Issues = "https://github.com/bright-angel/nmap-parser/issues"
+Changelog = "https://github.com/bright-angel/nmap-parser/blob/main/CHANGELOG.md"
+
+[tool.setuptools.dynamic]
+version = { attr = "nmap_parser.__about__.__version__" }
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 include = ["nmap_parser*"]
 
-[dependency-groups]
-dev = [
-    "build>=1.2.2.post1",
-]
+[tool.setuptools.package-data]
+nmap_parser = ["py.typed"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --strict-config"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF001", "RUF002", "RUF003"] # ambiguous unicode in CJK documentation strings
+
+[tool.mypy]
+# Follow the running interpreter so the same config works on every CI matrix
+# entry (mypy 2.x no longer accepts a 3.9 target).
+mypy_path = "src"
+packages = ["nmap_parser"]
+warn_unused_configs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["xlsxwriter.*", "customtkinter.*"]
+ignore_missing_imports = true

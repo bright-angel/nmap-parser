@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nmaprun scanner="nmap" version="7.95">
+  <host><address addr="10.0.0.99" addrtype="ipv4"/>
+</nmaprun>

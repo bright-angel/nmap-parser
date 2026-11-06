@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nmaprun scanner="nmap" args="nmap -oX upper.xml 10.2.2.2" start="1730000300" version="7.95" xmloutputversion="1.05">
+  <host starttime="1730000301" endtime="1730000302">
+    <status state="down" reason="no-response"/>
+    <address addr="10.2.2.2" addrtype="ipv4"/>
+  </host>
+  <runstats><finished time="1730000303" elapsed="1.0" exit="success"/><hosts up="0" down="1" total="1"/></runstats>
+</nmaprun>
